@@ -1,6 +1,7 @@
 package com.ijb.androidpagingstudy.model
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.PagedList
 import com.ijb.androidpagingstudy.model.Repo
 
 /**
@@ -8,6 +9,6 @@ import com.ijb.androidpagingstudy.model.Repo
  * and a LiveData<String> of network error state.
  */
 data class RepoSearchResult(
-        val data: LiveData<List<Repo>>,
+        val data: LiveData<PagedList<Repo>>,
         val networkErrors: LiveData<String>
 )

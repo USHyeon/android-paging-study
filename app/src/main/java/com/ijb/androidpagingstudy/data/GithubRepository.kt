@@ -1,10 +1,12 @@
 package com.ijb.androidpagingstudy.data
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.paging.PagedList
 import android.util.Log
 import com.ijb.androidpagingstudy.api.GithubService
 import com.ijb.androidpagingstudy.api.searchRepos
 import com.ijb.androidpagingstudy.db.GithubLocalCache
+import com.ijb.androidpagingstudy.model.Repo
 import com.ijb.androidpagingstudy.model.RepoSearchResult
 
 /**
@@ -35,7 +37,10 @@ class GithubRepository(
         // Get data from the local cache
         val data = cache.reposByName(query)
 
-        return RepoSearchResult(data, networkErrors)
+        // TODO : DataSource 활용해 수정
+        val tempData = MutableLiveData<PagedList<Repo>>()
+
+        return RepoSearchResult(tempData, networkErrors)
     }
 
     fun requestMore(query: String) {

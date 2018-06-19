@@ -1,6 +1,7 @@
 package com.ijb.androidpagingstudy.db
 
 import android.arch.lifecycle.LiveData
+import android.arch.paging.DataSource
 import android.util.Log
 import com.ijb.androidpagingstudy.model.Repo
 import java.util.concurrent.Executor
@@ -31,7 +32,7 @@ class GithubLocalCache(
      * any characters between the words.
      * @param name repository name
      */
-    fun reposByName(name: String): LiveData<List<Repo>> {
+    fun reposByName(name: String): DataSource.Factory<Int, Repo> {
         // appending '%' so we can allow other characters to be before and after the query string
         val query = "%${name.replace(' ', '%')}%"
         return repoDao.reposByName(query)

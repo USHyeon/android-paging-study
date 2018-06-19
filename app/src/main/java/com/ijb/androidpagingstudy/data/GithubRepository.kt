@@ -1,6 +1,7 @@
 package com.ijb.androidpagingstudy.data
 
 import android.arch.lifecycle.MutableLiveData
+import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.util.Log
 import com.ijb.androidpagingstudy.api.GithubService
@@ -35,12 +36,12 @@ class GithubRepository(
         requestAndSaveData(query)
 
         // Get data from the local cache
-        val data = cache.reposByName(query)
+        val dataSourceFactory = cache.reposByName(query)
 
-        // TODO : DataSource 활용해 수정
-        val tempData = MutableLiveData<PagedList<Repo>>()
+        // Get the paged list
+        val data = LivePagedListBuilder(dataSourceFactory, DATABASE_PAGE_SIZE).build()
 
-        return RepoSearchResult(tempData, networkErrors)
+        return RepoSearchResult(data, networkErrors)
     }
 
     fun requestMore(query: String) {
@@ -64,5 +65,6 @@ class GithubRepository(
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 50
+        private const val DATABASE_PAGE_SIZE = 20
     }
 }

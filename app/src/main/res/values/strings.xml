@@ -5,4 +5,7 @@
     <string name="search_hint">GitHub Repository</string>
     <string name="no_results">No results 😓</string>
     <string name="unknown">\?</string>
+    <string name="db_plus_network">db + network</string>
+    <string name="network_only_by_item">network only (by item)</string>
+    <string name="network_only_by_page">network only (by page)</string>
 </resources>

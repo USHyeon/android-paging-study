@@ -1,4 +1,4 @@
-package com.ijb.androidpagingstudy.data
+package com.ijb.androidpagingstudy.repository.inDb
 
 import android.arch.paging.LivePagedListBuilder
 import android.util.Log

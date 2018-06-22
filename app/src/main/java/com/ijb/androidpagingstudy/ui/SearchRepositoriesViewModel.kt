@@ -5,7 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.PagedList
-import com.ijb.androidpagingstudy.data.GithubRepository
+import com.ijb.androidpagingstudy.repository.inDb.GithubRepository
 import com.ijb.androidpagingstudy.model.Repo
 import com.ijb.androidpagingstudy.model.RepoSearchResult
 

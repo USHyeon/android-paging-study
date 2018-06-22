@@ -2,7 +2,7 @@ package com.ijb.androidpagingstudy.ui
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.ijb.androidpagingstudy.data.GithubRepository
+import com.ijb.androidpagingstudy.repository.inDb.GithubRepository
 
 /**
  * Factory for ViewModels

@@ -19,7 +19,7 @@ package com.ijb.androidpagingstudy
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import com.ijb.androidpagingstudy.api.GithubService
-import com.ijb.androidpagingstudy.data.GithubRepository
+import com.ijb.androidpagingstudy.repository.inDb.GithubRepository
 import com.ijb.androidpagingstudy.db.GithubLocalCache
 import com.ijb.androidpagingstudy.db.RepoDatabase
 import com.ijb.androidpagingstudy.ui.ViewModelFactory

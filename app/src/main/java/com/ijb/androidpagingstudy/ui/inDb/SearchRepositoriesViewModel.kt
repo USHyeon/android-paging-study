@@ -1,4 +1,4 @@
-package com.ijb.androidpagingstudy.ui
+package com.ijb.androidpagingstudy.ui.inDb
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData

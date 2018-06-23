@@ -1,4 +1,4 @@
-package com.ijb.androidpagingstudy.ui
+package com.ijb.androidpagingstudy.ui.inDb
 
 import android.content.Intent
 import android.net.Uri

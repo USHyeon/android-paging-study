@@ -27,7 +27,7 @@ private const val IN_QUALIFIER = "in:name,description"
  * @param onError function that defines how to handle request failure
  */
 fun searchRepos(
-        service: GithubService,
+        service: Client,
         query: String,
         page: Int,
         itemsPerPage: Int,
@@ -60,20 +60,17 @@ fun searchRepos(
     )
 }
 
-/**
- * Github API communication setup via Retrofit.
- */
-interface GithubService {
+interface Client {
     @GET("search/repositories?sort=stars")
     fun searchRepos(@Query("q") query: String,
                     @Query("page") page: Int,
                     @Query("per_page") itemsPerPage: Int): Call<RepoSearchResponse>
 
-
     companion object {
-        private const val BASE_URL = "https://api.github.com/"
+        const val BASE_URL_GITHUB = "https://api.github.com/"
+        const val BASE_URL_REDDIT = "https://www.reddit.com/"
 
-        fun create(): GithubService {
+        fun create(baseUrl: String): Client {
             val logger = HttpLoggingInterceptor()
             logger.level = HttpLoggingInterceptor.Level.BASIC
 
@@ -81,11 +78,11 @@ interface GithubService {
                     .addInterceptor(logger)
                     .build()
             return Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(baseUrl)
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
-                    .create(GithubService::class.java)
+                    .create(Client::class.java)
         }
     }
 

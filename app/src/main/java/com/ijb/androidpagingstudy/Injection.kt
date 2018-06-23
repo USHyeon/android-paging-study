@@ -18,11 +18,11 @@ package com.ijb.androidpagingstudy
 
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import com.ijb.androidpagingstudy.api.GithubService
+import com.ijb.androidpagingstudy.api.Client
 import com.ijb.androidpagingstudy.repository.inDb.GithubRepository
 import com.ijb.androidpagingstudy.db.GithubLocalCache
 import com.ijb.androidpagingstudy.db.RepoDatabase
-import com.ijb.androidpagingstudy.ui.ViewModelFactory
+import com.ijb.androidpagingstudy.ui.inDb.ViewModelFactory
 import java.util.concurrent.Executors
 
 /**
@@ -41,11 +41,11 @@ object Injection {
     }
 
     /**
-     * Creates an instance of [GithubRepository] based on the [GithubService] and a
+     * Creates an instance of [GithubRepository] based on the [Client] and a
      * [GithubLocalCache]
      */
     private fun provideGithubRepository(context: Context): GithubRepository {
-        return GithubRepository(GithubService.create(), provideCache(context))
+        return GithubRepository(Client.create(Client.BASE_URL_GITHUB), provideCache(context))
     }
 
     /**

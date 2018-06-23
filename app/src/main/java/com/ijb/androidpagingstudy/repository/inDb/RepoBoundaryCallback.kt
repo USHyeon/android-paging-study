@@ -3,7 +3,7 @@ package com.ijb.androidpagingstudy.repository.inDb
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PagedList
-import com.ijb.androidpagingstudy.api.GithubService
+import com.ijb.androidpagingstudy.api.Client
 import com.ijb.androidpagingstudy.api.searchRepos
 import com.ijb.androidpagingstudy.db.GithubLocalCache
 import com.ijb.androidpagingstudy.model.Repo
@@ -13,7 +13,7 @@ import com.ijb.androidpagingstudy.model.Repo
  */
 class RepoBoundaryCallback(
         private val query: String,
-        private val service: GithubService,
+        private val service: Client,
         private val cache: GithubLocalCache
 ) : PagedList.BoundaryCallback<Repo>() {
 

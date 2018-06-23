@@ -2,7 +2,7 @@ package com.ijb.androidpagingstudy.repository.inDb
 
 import android.arch.paging.LivePagedListBuilder
 import android.util.Log
-import com.ijb.androidpagingstudy.api.GithubService
+import com.ijb.androidpagingstudy.api.Client
 import com.ijb.androidpagingstudy.db.GithubLocalCache
 import com.ijb.androidpagingstudy.model.RepoSearchResult
 
@@ -10,7 +10,7 @@ import com.ijb.androidpagingstudy.model.RepoSearchResult
  * Repository class that works with local and remote data sources.
  */
 class GithubRepository(
-        private val service: GithubService,
+        private val service: Client,
         private val cache: GithubLocalCache
 ) {
 

@@ -1,7 +1,6 @@
-package com.ijb.androidpagingstudy.ui
+package com.ijb.androidpagingstudy.ui.inDb
 
 import android.arch.paging.PagedListAdapter
-import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup

@@ -1,8 +1,11 @@
 package com.ijb.androidpagingstudy.repository.inMemory.byItem
 
 import android.arch.paging.ItemKeyedDataSource
+import android.util.Log
 import com.ijb.androidpagingstudy.api.Client
 import com.ijb.androidpagingstudy.model.RedditPost
+import retrofit2.Call
+import retrofit2.Response
 
 /**
  * Created by bae injin on 2018. 6. 22..
@@ -24,6 +27,26 @@ class ItemKeyedSubRepoDataSource(
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<RedditPost>) {
 
+        api.getTopAfter(subreddit = subredditName,
+                after = params.key,
+                limit = params.requestedLoadSize).enqueue(
+                object : retrofit2.Callback<Client.ListingResponse> {
+                    override fun onFailure(call: Call<Client.ListingResponse>, t: Throwable) {
+                        Log.e(TAG, "network error: ${t.message}")
+                    }
+
+                    override fun onResponse(call: Call<Client.ListingResponse>, response: Response<Client.ListingResponse>) {
+                        if (response.isSuccessful) {
+
+                            val items = response.body()?.data?.children?.map { it.data } ?: emptyList()
+                            callback.onResult(items)
+                        } else {
+                            Log.e(TAG, "error code: ${response.code()}")
+                        }
+                    }
+
+                }
+        )
     }
 
     override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<RedditPost>) {
@@ -34,7 +57,6 @@ class ItemKeyedSubRepoDataSource(
 
     companion object {
         private const val TAG = "ItemKeyed"
-        private const val DEFAULT_QUERY = "kotlin"
     }
 
 }

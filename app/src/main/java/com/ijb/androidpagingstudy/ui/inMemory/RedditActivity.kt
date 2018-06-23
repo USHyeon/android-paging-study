@@ -16,12 +16,18 @@
 
 package com.ijb.androidpagingstudy.ui.inMemory
 
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import com.ijb.androidpagingstudy.R
+import com.ijb.androidpagingstudy.api.Client
+import com.ijb.androidpagingstudy.repository.inMemory.byItem.InMemoryByItemRepository
 import kotlinx.android.synthetic.main.activity_reddit.*
+import java.util.concurrent.Executors
 
 /**
  * A list activity that shows reddit posts in the given sub-reddit.
@@ -34,13 +40,32 @@ class RedditActivity : AppCompatActivity() {
         const val DEFAULT_SUBREDDIT = "androiddev"
     }
 
+    private lateinit var model: SubRedditViewModel
+
+    // thread pool used for network requests
+    @Suppress("PrivatePropertyName")
+    private val NETWORK_IO = Executors.newFixedThreadPool(5)
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reddit)
 
+        model = getViewModel()
         initAdapter()
         initSearch()
 
+    }
+
+    private fun getViewModel(): SubRedditViewModel {
+        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                val repo = InMemoryByItemRepository(redditApi = Client.create(Client.BASE_URL_REDDIT),
+                        networkExecutor = NETWORK_IO)
+                @Suppress("UNCHECKED_CAST")
+                return SubRedditViewModel(repo) as T
+            }
+        })[SubRedditViewModel::class.java]
     }
 
     private fun initAdapter() {
@@ -49,6 +74,7 @@ class RedditActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+
     }
 
     private fun initSearch() {

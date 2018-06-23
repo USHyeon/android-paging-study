@@ -21,6 +21,8 @@
 
         <activity android:name=".ui.inDb.SearchRepositoriesActivity" />
 
+        <activity android:name=".ui.inMemory.RedditActivity" />
+
     </application>
 
 </manifest>

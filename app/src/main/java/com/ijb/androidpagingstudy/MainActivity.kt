@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ijb.androidpagingstudy.ui.inDb.SearchRepositoriesActivity
+import com.ijb.androidpagingstudy.ui.inMemory.RedditActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             startActivity<SearchRepositoriesActivity>()
         }
         networkOnly.setOnClickListener {
-
+            startActivity<RedditActivity>()
         }
         networkOnlyWithPageKeys.setOnClickListener {
 

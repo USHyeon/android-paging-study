@@ -16,15 +16,18 @@
 
 package com.ijb.androidpagingstudy.ui.inMemory
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import com.ijb.androidpagingstudy.R
 import com.ijb.androidpagingstudy.api.Client
+import com.ijb.androidpagingstudy.model.RedditPost
 import com.ijb.androidpagingstudy.repository.inMemory.byItem.InMemoryByItemRepository
 import kotlinx.android.synthetic.main.activity_reddit.*
 import java.util.concurrent.Executors
@@ -54,7 +57,8 @@ class RedditActivity : AppCompatActivity() {
         model = getViewModel()
         initAdapter()
         initSearch()
-
+        val subreddit = savedInstanceState?.getString(KEY_SUBREDDIT) ?: DEFAULT_SUBREDDIT
+        model.showSubreddit(subreddit)
     }
 
     private fun getViewModel(): SubRedditViewModel {
@@ -70,11 +74,17 @@ class RedditActivity : AppCompatActivity() {
 
     private fun initAdapter() {
 
+        val adapter = PostsAdapter()
+        list.adapter = adapter
+
+        model.posts.observe(this, Observer<PagedList<RedditPost>> {
+            adapter.submitList(it)
+        })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-
+        outState.putString(KEY_SUBREDDIT, model.currentSubreddit())
     }
 
     private fun initSearch() {
@@ -97,6 +107,13 @@ class RedditActivity : AppCompatActivity() {
     }
 
     private fun updatedSubredditFromInput() {
-
+        input.text.trim().toString().let {
+            if (it.isNotEmpty()) {
+                if (model.showSubreddit(it)) {
+                    list.scrollToPosition(0)
+                    (list.adapter as PostsAdapter).submitList(null)
+                }
+            }
+        }
     }
 }

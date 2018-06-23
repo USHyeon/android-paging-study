@@ -13,7 +13,13 @@ class ItemKeyedSubRepoDataSource(
 ) : ItemKeyedDataSource<String, RedditPost>() {
 
     override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<RedditPost>) {
+        val request = api.getTop(
+                subreddit = subredditName,
+                limit = params.requestedLoadSize)
 
+        val response = request.execute()
+        val items = response.body()?.data?.children?.map { it.data } ?: emptyList()
+        callback.onResult(items)
     }
 
     override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<RedditPost>) {

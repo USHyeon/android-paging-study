@@ -27,6 +27,8 @@ import com.ijb.androidpagingstudy.model.RedditPost
  */
 interface RedditPostRepository {
 
+    fun postsOfSubreddit(subReddit: String, pageSize: Int): LiveData<PagedList<RedditPost>>
+
     enum class Type {
         IN_MEMORY_BY_ITEM,
         IN_MEMORY_BY_PAGE,

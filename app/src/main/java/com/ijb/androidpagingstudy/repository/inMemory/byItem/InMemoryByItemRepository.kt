@@ -16,7 +16,11 @@
 
 package com.ijb.androidpagingstudy.repository.inMemory.byItem
 
+import android.arch.lifecycle.LiveData
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import com.ijb.androidpagingstudy.api.Client
+import com.ijb.androidpagingstudy.model.RedditPost
 import com.ijb.androidpagingstudy.repository.inMemory.RedditPostRepository
 import java.util.concurrent.Executor
 
@@ -27,6 +31,24 @@ import java.util.concurrent.Executor
 class InMemoryByItemRepository(
         private val redditApi: Client,
         private val networkExecutor: Executor) : RedditPostRepository {
+
+    override fun postsOfSubreddit(subReddit: String, pageSize: Int): LiveData<PagedList<RedditPost>> {
+
+        val sourceFactory = SubRedditDataSourceFactory(redditApi, subReddit, networkExecutor)
+        val pagedListConfig = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(pageSize * 2)
+                .setPageSize(pageSize)
+                .build()
+
+        val pagedList = LivePagedListBuilder(sourceFactory, pagedListConfig)
+                // provide custom executor for network requests, otherwise it will default to
+                // Arch Components' IO pool which is also used for disk access
+                .setFetchExecutor(networkExecutor)
+                .build()
+
+        return pagedList
+    }
 
 }
 

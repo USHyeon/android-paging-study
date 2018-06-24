@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ijb.androidpagingstudy.ui.inDb.SearchRepositoriesActivity
 import com.ijb.androidpagingstudy.ui.inMemory.RedditActivity
+import com.ijb.androidpagingstudy.ui.inMemory.byPage.PageActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             startActivity<RedditActivity>()
         }
         networkOnlyWithPageKeys.setOnClickListener {
-
+            startActivity<PageActivity>()
         }
     }
 

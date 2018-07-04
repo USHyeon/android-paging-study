@@ -23,8 +23,6 @@
 
         <activity android:name=".ui.inMemory.RedditActivity" />
 
-        <activity android:name=".ui.inMemory.byPage.PageActivity" />
-
     </application>
 
 </manifest>

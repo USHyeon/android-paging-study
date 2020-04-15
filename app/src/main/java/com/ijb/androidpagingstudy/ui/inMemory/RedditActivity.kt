@@ -23,6 +23,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import com.ijb.androidpagingstudy.R
@@ -78,6 +79,7 @@ class RedditActivity : AppCompatActivity() {
         list.adapter = adapter
 
         model.posts.observe(this, Observer<PagedList<RedditPost>> {
+            Log.d("paging","it=$it")
             adapter.submitList(it)
         })
     }
@@ -89,6 +91,7 @@ class RedditActivity : AppCompatActivity() {
 
     private fun initSearch() {
         input.setOnEditorActionListener({ _, actionId, _ ->
+            Log.d("initScroll","actionId=$actionId")
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 updatedSubredditFromInput()
                 true
@@ -97,6 +100,7 @@ class RedditActivity : AppCompatActivity() {
             }
         })
         input.setOnKeyListener({ _, keyCode, event ->
+            Log.d("initScroll","evevnt=${event.action}")
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 updatedSubredditFromInput()
                 true

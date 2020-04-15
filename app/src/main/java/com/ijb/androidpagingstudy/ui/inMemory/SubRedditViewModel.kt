@@ -14,7 +14,7 @@ class SubRedditViewModel(private val repository: RedditPostRepository) : ViewMod
     private val repoResult = Transformations.map(subredditName, {
         repository.postsOfSubreddit(it, 30)
     })
-    val posts = Transformations.switchMap(repoResult, { it })!!
+    val posts = Transformations.switchMap(repoResult) { it }!!
 
     fun showSubreddit(subreddit: String): Boolean {
         if (subredditName.value == subreddit) {
